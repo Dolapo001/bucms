@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-// Browser: use '' so requests go through Next.js rewrite proxy (/api/* → backend)
-// Server (SSR/Vercel): use the real backend URL directly via env var
-const API_URL = typeof window !== 'undefined'
-  ? ''
-  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000');
+// Full backend base URL — set per environment via NEXT_PUBLIC_API_URL:
+//   Dev (.env.local):        http://localhost:8000
+//   Prod (Vercel monorepo):  https://your-project.vercel.app/_/backend
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export const apiClient = axios.create({
-  baseURL: `${API_URL}/api/v1`,
+  baseURL: `${API_BASE_URL}/api/v1`,
   headers: {
     'Content-Type': 'application/json',
   },
