@@ -1,0 +1,1 @@
+# placeholder — required so collectstatic doesn't error on an empty STATICFILES_DIRS
