@@ -1,0 +1,28 @@
+# ─── Python / Django (backend) ───────────────────────────────────────────────
+backend/.env
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+backend/staticfiles/
+backend/media/
+backend/db.sqlite3
+backend/*.egg-info/
+backend/dist/
+backend/build/
+
+# ─── Node / Next.js (frontend) ───────────────────────────────────────────────
+frontend/.env.local
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env*.local
+
+# ─── OS / Editor ─────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
