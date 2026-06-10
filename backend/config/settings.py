@@ -19,6 +19,8 @@ env = environ.Env(
     CLOUDINARY_CLOUD_NAME=(str, ""),
     CLOUDINARY_API_KEY=(str, ""),
     CLOUDINARY_API_SECRET=(str, ""),
+    CORS_ALLOW_ALL_ORIGINS=(bool, False),
+    CORS_ALLOWED_ORIGINS=(list, []),
 )
 
 # Read environment variables
@@ -59,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -133,6 +136,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -201,7 +205,10 @@ SPECTACULAR_SETTINGS = {
 }
 
 # 11. CORS Settings
-CORS_ALLOW_ALL_ORIGINS = True  # In production, specify front-end hosts explicitly
+# In development (DEBUG=True), allow all origins for convenience.
+# In production, set CORS_ALLOWED_ORIGINS via environment variable.
+CORS_ALLOW_ALL_ORIGINS = DEBUG or env('CORS_ALLOW_ALL_ORIGINS')
+CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS')
 CORS_ALLOW_CREDENTIALS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

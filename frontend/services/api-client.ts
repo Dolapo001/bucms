@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-// Base API instance that respects Next.js rewriting proxy in dev, and falls back to a default production backend URL
-const API_URL = typeof window !== 'undefined' ? '' : 'http://localhost:8000';
+// Browser: use '' so requests go through Next.js rewrite proxy (/api/* → backend)
+// Server (SSR/Vercel): use the real backend URL directly via env var
+const API_URL = typeof window !== 'undefined'
+  ? ''
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000');
 
 export const apiClient = axios.create({
   baseURL: `${API_URL}/api/v1`,
